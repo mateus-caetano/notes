@@ -15,7 +15,7 @@ Window {
     visible: true
     title: qsTr("Notes")
 
-    property string id: ""
+    property var _id
     property string titleProperty:  ""
     property string descriptionProperty: ""
     property string colorProperty: ""
@@ -218,7 +218,7 @@ Window {
                     anchors.left: parent.left
                     onPressed: {
 
-                        notes.deleteRow(id)
+                        notes.deleteRow(_id)
                         edit.close()
 
                     }
@@ -242,9 +242,9 @@ Window {
                         else color = "gray"
 
                         if((titleProperty !== titleEdit.text) || descriptionProperty !== descriptionEdit.text || isDiffColor){
-                            notes.updateRow(id, titleEdit.text, descriptionEdit.text, date, color)
+                            notes.updateRow(_id, titleEdit.text, descriptionEdit.text, date, color)
 
-                            console.log(id, titleEdit.text, descriptionEdit.text, date, color)
+                            console.log(_id, titleEdit.text, descriptionEdit.text, date, color)
                         }
 
                         edit.close()
@@ -327,7 +327,7 @@ Window {
                     break
                 }
 
-                id = model.id
+                _id = model.id
                 titleProperty = model.title
                 descriptionProperty = model.description
                 colorProperty = model.color
@@ -394,12 +394,12 @@ Window {
 
         model: notes
 
-        width: window.width
-        height: window.height * 0.85
+        width: window.width * 0.8
+        height: window.height * 0.8
+
         anchors.top: addNoteButton.bottom
         anchors.bottom: window.bottom
-        anchors.topMargin: 25
-        leftMargin: width * 0.1
+        anchors.centerIn: parent
 
         spacing: 16
         clip: true
@@ -425,7 +425,7 @@ Window {
                     break
                 }
 
-                id = model.id
+                _id = model.id
                 titleProperty = model.title
                 descriptionProperty = model.description
                 colorProperty = model.color
@@ -434,7 +434,7 @@ Window {
             background: Rectangle {
                 color: model.color
                 implicitHeight: window.height / 4
-                implicitWidth: listView.width * 0.8
+                implicitWidth: listView.width
                 radius: 8
 
                 Column {
