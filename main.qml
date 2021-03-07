@@ -46,10 +46,12 @@ Window {
     }
 
     Button {
-        text: "change view"
+        id: viewButton
 
-        anchors.right: parent.right
-        anchors.rightMargin: 16
+        text: "Visualizar como lista"
+
+        anchors.left: parent.left
+        anchors.leftMargin: 16
         anchors.top: parent.top
         anchors.topMargin: 16
 
@@ -67,6 +69,23 @@ Window {
                 gridView.state = "isGridView"
             }
         }
+    }
+
+    Button {
+        anchors.right: parent.right
+        anchors.rightMargin: 16
+        anchors.top: parent.top
+        anchors.topMargin: 16
+
+        background: Rectangle {
+            implicitWidth: 120
+            implicitHeight: 40
+            radius: 8
+            color: "#ddd"
+        }
+
+        text: "Perfil"
+
     }
 
     Dialog {
@@ -130,10 +149,10 @@ Window {
                     onPressed: {
                         const date = (new Date).toDateString()
                         let color
-                        if(blue.checked) color = "blue"
-                        else if(red.checked) color = "red"
-                        else if(yellow.checked) color = "yellow"
-                        else color = "gray"
+                        if(blue.checked) color = "#3892ff"
+                        else if(red.checked) color = "#ff4242"
+                        else if(yellow.checked) color = "#faff42"
+                        else color = "#ddd"
 
                         notes.newRow(title.text, description.text, date, color)
 
@@ -162,8 +181,6 @@ Window {
         title: "Nova nota"
         width: 500
         height: 330
-
-
 
         contentItem: Column {
             anchors.fill: parent
@@ -219,13 +236,16 @@ Window {
                     onPressed: {
 
                         notes.deleteRow(_id)
+                        blueEdit.checked = false
+                        redEdit.checked = false
+                        yellowEdit.checked = false
                         edit.close()
 
                     }
                 }
 
                 Button {
-                    text: "Fechar"
+                    text: "Salvar"
                     anchors.right: parent.right
                     onPressed: {
 
@@ -236,16 +256,18 @@ Window {
 
                         const date = (new Date).toDateString()
                         let color
-                        if(blueEdit.checked) color = "blue"
-                        else if(redEdit.checked) color = "red"
-                        else if(yellowEdit.checked) color = "yellow"
-                        else color = "gray"
+                        if(blueEdit.checked) color = "#3892ff"
+                        else if(redEdit.checked) color = "#ff4242"
+                        else if(yellowEdit.checked) color = "#faff42"
+                        else color = "#ddd"
 
                         if((titleProperty !== titleEdit.text) || descriptionProperty !== descriptionEdit.text || isDiffColor){
                             notes.updateRow(_id, titleEdit.text, descriptionEdit.text, date, color)
-
-                            console.log(_id, titleEdit.text, descriptionEdit.text, date, color)
                         }
+
+                        blueEdit.checked = false
+                        redEdit.checked = false
+                        yellowEdit.checked = false
 
                         edit.close()
                     }
@@ -272,6 +294,11 @@ Window {
                     target: listView
                     visible: false
                 }
+
+                PropertyChanges {
+                    target: viewButton
+                    text: "Visualizar como lista"
+                }
             },
 
             State {
@@ -284,6 +311,11 @@ Window {
                 PropertyChanges {
                     target: listView
                     visible: true
+                }
+
+                PropertyChanges {
+                    target: viewButton
+                    text: "Visualizar como grade"
                 }
             }
 
@@ -316,13 +348,13 @@ Window {
                 descriptionEdit.text = model.description
 
                 switch(model.color){
-                case "blue":
+                case "#3892ff":
                     blueEdit.checked = true
                     break
-                case "red":
+                case "#ff4242":
                     redEdit.checked = true
                     break
-                case "yellow":
+                case "#faff42":
                     yellowEdit.checked = true
                     break
                 }
@@ -414,13 +446,13 @@ Window {
                 descriptionEdit.text = model.description
 
                 switch(model.color){
-                case "blue":
+                case "#3892ff":
                     blueEdit.checked = true
                     break
-                case "red":
+                case "#ff4242":
                     redEdit.checked = true
                     break
-                case "yellow":
+                case "#faff42":
                     yellowEdit.checked = true
                     break
                 }

@@ -72,8 +72,7 @@ void NotesDatabaseModel::updateRow(QString id, QString title, QString descriptio
     updateQuery.bindValue(":description", description);
     updateQuery.bindValue(":createdin", createdin);
     updateQuery.bindValue(":color", color);
-    if(updateQuery.exec()) qDebug() << "atualizou";
-    else qDebug() << "erro";
+    updateQuery.exec();
     select();
 }
 
