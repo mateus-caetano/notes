@@ -1,4 +1,4 @@
-QT += quick
+QT += quick sql
 
 CONFIG += c++11
 
@@ -7,9 +7,11 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        main.cpp
-
-RESOURCES += qml.qrc
+        database.cpp \
+        main.cpp \
+        notesdatabasemodel.cpp
+RESOURCES += qml.qrc \
+    sql.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -21,3 +23,8 @@ QML_DESIGNER_IMPORT_PATH =
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+HEADERS += \
+    database.h \
+    notesdatabasemodel.h \
+    noteslistmodel.h
